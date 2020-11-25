@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:tcc_cart_vac/views/cadastro.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("TCC | Carteira de Vacinação"),
+        title: Text("Login | Carteira de Vacinação"),
         centerTitle: true,
         backgroundColor: Colors.lightBlueAccent,
       ),
@@ -43,7 +44,7 @@ class _LoginState extends State<Login> {
                       labelText: "E-mail",
                       labelStyle: TextStyle(color: Colors.grey),
                     ),
-                    style: TextStyle(color: Colors.black, fontSize: 25.0),
+                    style: TextStyle(color: Colors.black, fontSize: 22.5),
                     controller: mailController,
                     // ignore: missing_return
                     validator: (value) {
@@ -59,7 +60,7 @@ class _LoginState extends State<Login> {
                       labelText: "Senha",
                       labelStyle: TextStyle(color: Colors.grey),
                     ),
-                    style: TextStyle(color: Colors.black, fontSize: 25.0),
+                    style: TextStyle(color: Colors.black, fontSize: 22.5),
                     controller: passController,
                     // ignore: missing_return
                     validator: (value) {
@@ -91,7 +92,10 @@ class _LoginState extends State<Login> {
                           decoration: TextDecoration.none,
                           color: Colors.grey,
                           fontSize: 16.0)),
-                  onTap: () {}),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cadastro()));
+                  }),
             ],
           ),
         ),
