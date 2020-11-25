@@ -1,6 +1,6 @@
-# tcc_cart_vac
+# TCC - APLICATIVO CARTEIRA DE VACINAÇÃO
 
-A new Flutter project.
+Projeto desenvolvido com auxílio do Flutter.
 
 ## Getting Started
 
