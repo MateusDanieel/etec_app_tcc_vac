@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:tcc_cart_vac/views/cadastro.dart';
+import 'package:tcc_cart_vac/views/dash.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -81,7 +82,10 @@ class _LoginState extends State<Login> {
                 ),
                 color: Colors.lightBlueAccent,
                 padding: EdgeInsets.fromLTRB(30, 15, 30, 15),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Dash()));
+                },
               ),
               Padding(
                 padding: EdgeInsets.only(bottom: 20),
