@@ -17,23 +17,23 @@ class _DashState extends State<Dash> {
       body: SingleChildScrollView(
           padding: EdgeInsets.all(10.0),
           child: Column(children: [
-            CheckboxListTile(
+            ListTile(
               title: Text("POLIOMIELITE", style: TextStyle()),
               subtitle: Text("DATA: 22/08/1997 | LOTE: 37.038-SP"),
-              onChanged: (bool value) {},
-              value: true,
             ),
-            CheckboxListTile(
+            ListTile(
               title: Text("HEPATITE B", style: TextStyle()),
-              subtitle: Text("PENDENTE"),
-              onChanged: (bool value) {},
-              value: false,
+              subtitle: Text(
+                "PENDENTE",
+                style: TextStyle(color: Colors.red),
+              ),
             ),
-            CheckboxListTile(
+            ListTile(
               title: Text("SARAMPO", style: TextStyle()),
-              subtitle: Text("PENDENTE"),
-              onChanged: (bool value) {},
-              value: false,
+              subtitle: Text(
+                "PENDENTE",
+                style: TextStyle(color: Colors.red),
+              ),
             ),
           ])),
     );
