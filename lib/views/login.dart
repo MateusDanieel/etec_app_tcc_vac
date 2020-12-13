@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:tcc_cart_vac/views/cadastro.dart';
 import 'package:tcc_cart_vac/views/dash.dart';
+import 'package:tcc_cart_vac/user.dart';
+import 'package:tcc_cart_vac/api.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -13,6 +16,27 @@ class _LoginState extends State<Login> {
   TextEditingController mailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  var users = new List<User>();
+  String _logError = "";
+
+  _getUsers() {
+    API.getUsers().then((response) {
+      setState(() {
+        Iterable list = json.decode(response.body);
+        users = list.map((model) => User.fromJson(model)).toList();
+      });
+    });
+  }
+
+  initState() {
+    super.initState();
+    _getUsers();
+  }
+
+  dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,21 +96,36 @@ class _LoginState extends State<Login> {
                   ),
                 ]),
               ),
+              Text("$_logError",
+                  style: TextStyle(
+                      decoration: TextDecoration.none,
+                      color: Colors.redAccent,
+                      fontSize: 18.0)),
               Padding(
                 padding: EdgeInsets.only(bottom: 30),
               ),
               RaisedButton(
-                child: Text(
-                  "ENTRAR",
-                  style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
-                color: Colors.lightBlueAccent,
-                padding: EdgeInsets.fromLTRB(30, 15, 30, 15),
-                onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Dash()));
-                },
-              ),
+                  child: Text(
+                    "ENTRAR",
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                  color: Colors.lightBlueAccent,
+                  padding: EdgeInsets.fromLTRB(30, 15, 30, 15),
+                  onPressed: () {
+                    users.forEach((el) {
+                      if (el.email == mailController.text &&
+                          el.senha == passController.text) {
+                        _logError = "";
+
+                        return Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Dash()));
+                      } else {
+                        setState(() {
+                          _logError = "Usuário e/ou senha inválida.";
+                        });
+                      }
+                    });
+                  }),
               Padding(
                 padding: EdgeInsets.only(bottom: 20),
               ),
