@@ -115,7 +115,9 @@ class _LoginState extends State<Login> {
                     users.forEach((el) {
                       if (el.email == mailController.text &&
                           el.senha == passController.text) {
-                        _logError = "";
+                        setState(() {
+                          _logError = "";
+                        });
 
                         return Navigator.push(context,
                             MaterialPageRoute(builder: (context) => Dash()));
