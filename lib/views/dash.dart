@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Dash extends StatefulWidget {
+  String usuarioLogado;
+
+  Dash(this.usuarioLogado);
+
   @override
   _DashState createState() => _DashState();
 }
@@ -18,7 +22,7 @@ class _DashState extends State<Dash> {
           padding: EdgeInsets.all(10.0),
           child: Column(children: [
             ListTile(
-              title: Text("POLIOMIELITE", style: TextStyle()),
+              title: Text("${widget.usuarioLogado}", style: TextStyle()),
               subtitle: Text("DATA: 22/08/1997 | LOTE: 37.038-SP"),
             ),
             ListTile(

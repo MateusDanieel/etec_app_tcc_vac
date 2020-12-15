@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
   String _logError = "";
 
   _getUsers() {
-    API.getUsers().then((response) {
+    Usuarios.getUsers().then((response) {
       setState(() {
         Iterable list = json.decode(response.body);
         users = list.map((model) => User.fromJson(model)).toList();
@@ -115,12 +115,16 @@ class _LoginState extends State<Login> {
                     users.forEach((el) {
                       if (el.email == mailController.text &&
                           el.senha == passController.text) {
+                        String usuarioLogado;
                         setState(() {
                           _logError = "";
-                        });
+                          usuarioLogado = mailController.text;
 
-                        return Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Dash()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Dash(usuarioLogado)));
+                        });
                       } else {
                         setState(() {
                           _logError = "Usuário e/ou senha inválida.";
