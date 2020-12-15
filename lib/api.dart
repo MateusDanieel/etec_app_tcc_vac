@@ -11,14 +11,14 @@ class Usuarios {
 }
 
 class Vacinas {
-  static Future getUsers() {
+  static Future getVacinas() {
     var url = baseUrl + "/vacina";
     return http.get(url);
   }
 }
 
 class Vacinados {
-  static Future getUsers() {
+  static Future getVacinados() {
     var url = baseUrl + "/vacinar";
     return http.get(url);
   }

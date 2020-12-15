@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:tcc_cart_vac/views/cadastro.dart';
 import 'package:tcc_cart_vac/views/dash.dart';
-import 'package:tcc_cart_vac/user.dart';
+import 'package:tcc_cart_vac/models.dart';
 import 'package:tcc_cart_vac/api.dart';
 
 class Login extends StatefulWidget {

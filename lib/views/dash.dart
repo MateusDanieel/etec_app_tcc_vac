@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:tcc_cart_vac/api.dart';
+import 'package:tcc_cart_vac/models.dart';
 
 class Dash extends StatefulWidget {
   String usuarioLogado;
@@ -10,6 +14,37 @@ class Dash extends StatefulWidget {
 }
 
 class _DashState extends State<Dash> {
+  var vacinados = new List<Vacinado>();
+  var vacinas = new List<Vacina>();
+
+  _getVacinados() {
+    Vacinados.getVacinados().then((response) {
+      setState(() {
+        Iterable list = json.decode(response.body);
+        vacinados = list.map((model) => Vacinado.fromJson(model)).toList();
+      });
+    });
+  }
+
+  _getVacinas() {
+    Vacinas.getVacinas().then((response) {
+      setState(() {
+        Iterable list = json.decode(response.body);
+        vacinas = list.map((model) => Vacina.fromJson(model)).toList();
+      });
+    });
+  }
+
+  initState() {
+    super.initState();
+    _getVacinados();
+    _getVacinas();
+  }
+
+  dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,28 +53,28 @@ class _DashState extends State<Dash> {
         centerTitle: true,
         backgroundColor: Colors.lightBlueAccent,
       ),
-      body: SingleChildScrollView(
+      body: ListView.builder(
           padding: EdgeInsets.all(10.0),
-          child: Column(children: [
-            ListTile(
-              title: Text("${widget.usuarioLogado}", style: TextStyle()),
-              subtitle: Text("DATA: 22/08/1997 | LOTE: 37.038-SP"),
-            ),
-            ListTile(
-              title: Text("HEPATITE B", style: TextStyle()),
-              subtitle: Text(
-                "PENDENTE",
-                style: TextStyle(color: Colors.red),
-              ),
-            ),
-            ListTile(
-              title: Text("SARAMPO", style: TextStyle()),
-              subtitle: Text(
-                "PENDENTE",
-                style: TextStyle(color: Colors.red),
-              ),
-            ),
-          ])),
+          itemCount: vacinados.length,
+          itemBuilder: (context, index) {
+            return _listaVacinas(context, index);
+          }),
     );
+  }
+
+  Widget _listaVacinas(BuildContext context, int i) {
+    return SingleChildScrollView(
+        padding: EdgeInsets.all(10.0),
+        child: Column(children: [
+          ListTile(
+            title: Text(vacinas[i].nomeVacina, style: TextStyle()),
+            subtitle: Text(vacinados[i].statusVacinaAplicada == true
+                ? "DATA: " +
+                    vacinados[i].dataVacinaAplicada +
+                    " | LOTE: " +
+                    vacinados[i].lote
+                : "PENDENTE"),
+          ),
+        ]));
   }
 }
