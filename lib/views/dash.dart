@@ -55,26 +55,30 @@ class _DashState extends State<Dash> {
       ),
       body: ListView.builder(
           padding: EdgeInsets.all(10.0),
-          itemCount: vacinados.length,
+          itemCount: vacinas.length,
           itemBuilder: (context, index) {
             return _listaVacinas(context, index);
           }),
     );
   }
 
-  Widget _listaVacinas(BuildContext context, int i) {
-    return SingleChildScrollView(
-        padding: EdgeInsets.all(10.0),
-        child: Column(children: [
-          ListTile(
-            title: Text(vacinas[i].nomeVacina, style: TextStyle()),
-            subtitle: Text(vacinados[i].statusVacinaAplicada == true
-                ? "DATA: " +
-                    vacinados[i].dataVacinaAplicada +
-                    " | LOTE: " +
-                    vacinados[i].lote
-                : "PENDENTE"),
-          ),
-        ]));
+  Widget _listaVacinas(BuildContext context, int index) {
+    return GestureDetector(
+      child: Card(
+        child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Column(children: [
+              ListTile(
+                title: Text(vacinas[index].nomeVacina, style: TextStyle()),
+                subtitle: Text(vacinados[index].statusVacinaAplicada == true
+                    ? "DATA: " +
+                        vacinados[index].dataVacinaAplicada +
+                        " | LOTE: " +
+                        vacinados[index].lote
+                    : "PENDENTE"),
+              ),
+            ])),
+      ),
+    );
   }
 }
