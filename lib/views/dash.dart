@@ -79,7 +79,7 @@ class _DashState extends State<Dash> {
                               " | LOTE: " +
                               vacinados[index].lote)
                           .toUpperCase()
-                      : ("PENDENTE"),
+                      : ("PENDENTE "),
                 ),
               ),
             ])),
