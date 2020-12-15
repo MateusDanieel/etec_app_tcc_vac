@@ -69,13 +69,18 @@ class _DashState extends State<Dash> {
             padding: EdgeInsets.all(10.0),
             child: Column(children: [
               ListTile(
-                title: Text(vacinas[index].nomeVacina, style: TextStyle()),
-                subtitle: Text(vacinados[index].statusVacinaAplicada == true
-                    ? "DATA: " +
-                        vacinados[index].dataVacinaAplicada +
-                        " | LOTE: " +
-                        vacinados[index].lote
-                    : "PENDENTE"),
+                title: Text(vacinas[index].nomeVacina.toUpperCase(),
+                    style: TextStyle()),
+                subtitle: Text(
+                  widget.usuarioLogado == vacinados[index].emailUsuario &&
+                          vacinados[index].statusVacinaAplicada == true
+                      ? ("DATA: " +
+                              vacinados[index].dataVacinaAplicada +
+                              " | LOTE: " +
+                              vacinados[index].lote)
+                          .toUpperCase()
+                      : ("PENDENTE"),
+                ),
               ),
             ])),
       ),
