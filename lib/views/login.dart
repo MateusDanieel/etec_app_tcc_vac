@@ -130,9 +130,12 @@ class _LoginState extends State<Login> {
                     });
 
                     setState(() {
-                      if (_logError != "") {
+                      if (_logError != "" && _logUser != "" ||
+                          _logError == "" && _logUser != "") {
+                        _logUser = "";
                         _logError = "";
                       } else {
+                        _logUser = "";
                         _logError = "Usuário e/ou senha inválida.";
                       }
                     });
