@@ -18,6 +18,7 @@ class Cadastro extends StatefulWidget {
 }
 
 class _CadastroState extends State<Cadastro> {
+  String _cadError = "";
   Dio dio = new Dio();
   Future postData() async {
     final String pathUrl = 'https://vacina-app.herokuapp.com/user';
@@ -165,7 +166,15 @@ class _CadastroState extends State<Cadastro> {
               },
             ),
             Padding(
-              padding: EdgeInsets.only(top: 15.0, bottom: 15.0),
+              padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+            ),
+            Text("$_cadError",
+                style: TextStyle(
+                    decoration: TextDecoration.none,
+                    color: Colors.redAccent,
+                    fontSize: 18.0)),
+            Padding(
+              padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
             ),
             RaisedButton(
               child: Text(
@@ -175,20 +184,30 @@ class _CadastroState extends State<Cadastro> {
               color: Colors.lightBlueAccent,
               padding: EdgeInsets.fromLTRB(30, 15, 30, 15),
               onPressed: () {
-                setState(() async {
-                  print('posting data ...');
-                  await postData().then((value) {
-                    final String nomeCompleto = nomeCompController.text;
-                    final String susCartao = nmrSusController.text;
-                    final String dataNasc = dtNascController.text;
-                    final String email = emailController.text;
-                    final String senha = senhaController.text;
-
-                    print(value);
+                if (nomeCompController.text == "" ||
+                    nmrSusController.text == "" ||
+                    dtNascController.text == "" ||
+                    emailController.text == "" ||
+                    senhaController.text == "") {
+                  setState(() {
+                    return _cadError = "Preencha todos os campos.";
                   });
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Login()));
-                });
+                } else {
+                  setState(() async {
+                    print('posting data ...');
+                    await postData().then((value) {
+                      final String nomeCompleto = nomeCompController.text;
+                      final String susCartao = nmrSusController.text;
+                      final String dataNasc = dtNascController.text;
+                      final String email = emailController.text;
+                      final String senha = senhaController.text;
+                      _cadError = "";
+                      print(value);
+                    });
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login()));
+                  });
+                }
               },
             ),
           ]),
