@@ -1,17 +1,50 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter/cupertino.dart';
+
+import 'dart:convert';
+import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
+
+import 'package:tcc_cart_vac/models.dart';
+import 'package:tcc_cart_vac/api.dart';
+
+import 'login.dart';
+
 class Cadastro extends StatefulWidget {
   @override
   _CadastroState createState() => _CadastroState();
 }
 
 class _CadastroState extends State<Cadastro> {
+  Dio dio = new Dio();
+  Future postData() async {
+    final String pathUrl = 'https://vacina-app.herokuapp.com/user';
+
+    dynamic data = {
+      'nomeCompleto': nomeCompController.text,
+      'email': emailController.text,
+      'senha': senhaController.text,
+      'cpf': cpfController.text,
+      'dataNasc': dtNascController.text,
+      'susCartao': nmrSusController.text
+    };
+    var response = await dio.post(pathUrl,
+        data: data,
+        options: Options(headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        }));
+
+    return response.data;
+  }
+
   TextEditingController nomeCompController = TextEditingController();
   TextEditingController nmrSusController = TextEditingController();
   TextEditingController dtNascController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController senhaController = TextEditingController();
-  TextEditingController cepController = TextEditingController();
+  TextEditingController cpfController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -71,11 +104,11 @@ class _CadastroState extends State<Cadastro> {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 border: InputBorder.none,
-                labelText: "CEP",
+                labelText: "CPF",
                 labelStyle: TextStyle(color: Colors.grey),
               ),
               style: TextStyle(color: Colors.black, fontSize: 22.5),
-              controller: cepController,
+              controller: cpfController,
               // ignore: missing_return
               validator: (value) {
                 if (value.isEmpty) {
@@ -141,7 +174,22 @@ class _CadastroState extends State<Cadastro> {
               ),
               color: Colors.lightBlueAccent,
               padding: EdgeInsets.fromLTRB(30, 15, 30, 15),
-              onPressed: () {},
+              onPressed: () {
+                setState(() async {
+                  print('posting data ...');
+                  await postData().then((value) {
+                    final String nomeCompleto = nomeCompController.text;
+                    final String susCartao = nmrSusController.text;
+                    final String dataNasc = dtNascController.text;
+                    final String email = emailController.text;
+                    final String senha = senhaController.text;
+
+                    print(value);
+                  });
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Login()));
+                });
+              },
             ),
           ]),
         ),

@@ -18,6 +18,7 @@ class _LoginState extends State<Login> {
 
   var users = new List<User>();
   String _logError = "";
+  String _logUser = "";
 
   _getUsers() {
     Usuarios.getUsers().then((response) {
@@ -115,19 +116,24 @@ class _LoginState extends State<Login> {
                       if (el.email == mailController.text &&
                           el.senha == passController.text) {
                         String usuarioLogado;
+
                         setState(() {
-                          _logError = "";
                           usuarioLogado = mailController.text;
+                          _logUser = usuarioLogado;
 
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => Dash(usuarioLogado)));
                         });
+                      }
+                    });
+
+                    setState(() {
+                      if (_logError != "") {
+                        _logError = "";
                       } else {
-                        setState(() {
-                          _logError = "Usuário e/ou senha inválida.";
-                        });
+                        _logError = "Usuário e/ou senha inválida.";
                       }
                     });
                   }),
